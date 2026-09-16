@@ -1,4 +1,4 @@
-# Degree-Ratio Sombor Indices of Chemical Trees — Computational Reproducibility Materials
+# Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Structural Discrimination, and Property-Specific Resolution in Alkane QSPR — Computational Reproducibility Materials
 
 This repository provides the computational materials associated with the manuscript
 **“Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Structural Discrimination, and Property-Specific QSPR Resolution.”**
