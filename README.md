@@ -2,7 +2,8 @@
 
 This repository provides the computational materials associated with the manuscript
 
-**“Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Structural Discrimination, and Property-Specific Resolution in Alkane QSPR”**
+
+**“Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Discrimination, and Alkane QSPR”**
 
 It contains the analysis code, processed data used in the manuscript, reference result tables, and consistency checks used to reproduce or audit the reported computational results.
 
