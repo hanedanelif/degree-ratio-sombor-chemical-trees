@@ -3,6 +3,9 @@ message: "If you use these materials, please cite them as below."
 title: "Degree-Ratio Sombor Indices of Chemical Trees: computational reproducibility materials"
 type: software
 license: MIT
+version: v1.0.0
+date-released: 2026-11-06
+doi: 10.5281/zenodo.24022449
 repository-code: "https://github.com/hanedanelif/degree-ratio-sombor-chemical-trees"
 authors:
   - family-names: Hanedan
