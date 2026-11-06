@@ -1,336 +1,38 @@
-# Degree-Ratio Sombor Indices of Chemical Trees — Computational Reproducibility Materials
+# Figure sources for "Degree-Ratio Sombor Indices of Chemical Trees"
 
-This repository provides the computational materials associated with the manuscript
+This directory contains reproducible Python plotting implementations for Figures 1–6 of the manuscript. The scripts create vector-PDF and 600-dpi PNG outputs from the specified mathematical constructions and reference data. Use the outputs of these scripts when a direct match to the supplied source code is required.
 
-**“Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Discrimination, and Alkane QSPR”**
-by Elif Hanedan, Fatma Ozen Erdogan and Ismail Naci Cangul (Bursa Uludağ University), submitted to the *Journal of Applied Mathematics and Computing*.
-
-It contains the analysis code, processed data used in the manuscript, reference result tables, consistency checks, and the code that draws all six manuscript figures.
-
-## Scope
-
-The repository supports the following analyses:
-
-- exact equality-class enumeration of chemical trees of orders 4–20 for SO, DRSO/mDRSO, and SDD;
-- exact representation of DRSO/mDRSO equality through the six-component degree-ratio profile;
-- complete C6–C10 boiling-point fixed-size LOOCV analyses;
-- pooled repeated 10×10-fold out-of-fold cross-validation for the size-adjusted boiling-point models;
-- categorical carbon-number robustness analysis;
-- the size-adjusted descriptor comparison reported in manuscript Table 6;
-- the complete C6–C10 boiling-point response-permutation analysis with plus-one correction and Benjamini–Hochberg adjustment;
-- five-endpoint HC/D/RI/E/BP fixed-size analyses and auditing of the associated archived DRSO/mDRSO permutation conclusions;
-- structural-resolution ratios and descriptor-partition representation limits;
-- generation of Figures 1–6 of the manuscript (`figure_code/`).
-
-## Computational protocol
-
-### Pooled repeated cross-validation
-
-```python
-RepeatedKFold(
-    n_splits=10,
-    n_repeats=10,
-    random_state=20260812
-)
-```
-
-All held-out predictions from the 100 validation folds are pooled into a single out-of-fold prediction vector. The reported Q², RMSE, and MAE values are calculated from this pooled vector. Identical fold assignments are used for all compared model specifications.
-
-The integer seed `20260812` is used solely to make the resampling procedures and the implemented permutation audits reproducible; it has no inferential meaning.
-
-### Fixed-size analysis
-
-Complete fixed-size isomer series are assessed by leave-one-out cross-validation (LOOCV).
-
-### Boiling-point response permutation
-
-The complete C6–C10 boiling-point association analysis uses:
-
-- 10,000 response permutations per descriptor-response test;
-- the in-sample simple-regression R² as the test statistic;
-- `numpy.random.default_rng(20260812)`;
-- one continuous pseudo-random number stream;
-- carbon-number order C6, C7, C8, C9, C10;
-- descriptor order `DRSO, mDRSO, SO, SDD, M1, M2, Randic, ABC, GA`;
-- plus-one correction for permutation p-values;
-- Benjamini–Hochberg adjustment within each carbon-number-specific family of nine descriptors.
-
-The automated test suite verifies the corresponding permutation exceedance counts for this boiling-point analysis.
-
-### Five-endpoint permutation audit
-
-For the common five-response HC/D/RI/E/BP panel, the archived DRSO/mDRSO permutation p-values are retained as canonical historical outputs.
-
-The exact historical random-number stream consumption order for this five-endpoint permutation run is not preserved in the public package. Therefore, the five-endpoint audit script does not claim digit-for-digit regeneration of those historical Monte-Carlo p-values.
-
-Instead, the script:
-
-- verifies the archived DRSO/mDRSO raw permutation p-values used in the manuscript;
-- verifies that these values imply the reported Benjamini–Hochberg significance conclusions within the pre-specified nine-descriptor families;
-- optionally performs a new deterministic 10,000-permutation robustness audit using seed `20260812`.
-
-## Repository structure
-
-```text
-drso_reproducibility.py                # main boiling-point and exact-enumeration reproducibility analysis
-
-src/
-  qsardb_pipeline.py                   # rebuilds the 134-compound QDB.122 common panel
-  DRSO_five_endpoint_analysis.py       # reproduces and audits the HC/D/RI/E/BP analyses
-
-data/processed/
-  alkane_bp_c6_c10_142_master.csv      # processed C6–C10 boiling-point analysis table
-
-results/reference/                     # reference outputs corresponding to manuscript results
-  exact_enumeration_counts_n4_n20.csv
-  bp_c6_c10_loocv.csv
-  bp_partition_representation_limits.csv
-  bp_permutation_10000_bh.csv
-  c8_representation_ceilings.csv
-  five_endpoint_c7_c8_summary.csv
-  pooled_bp_results.csv
-  table5_structural_resolution_bp.csv
-  table6_size_adjusted_bp.csv
-
-results/recomputed/                    # outputs regenerated by the scripts (created on first run, gitignored)
-
-figure_code/                           # code for manuscript Figures 1–6 (see figure_code/README.md)
-  draw_figures_1_3.py                  # Figures 1 and 3
-  draw_fig2_fig4_fig5_fig6.py          # Figures 2, 4, 5 and 6
-  make_all_figures.py                  # runs both scripts
-  requirements-figures.txt
-  data/                                # copies of the two reference CSVs used by Figures 5 and 6
-  output/                              # generated vector PDFs and 600-dpi PNGs
-
-tests/
-  test_reproducibility.py              # automated BP/permutation/enumeration consistency checks
-
-docs/
-  COMPUTATIONAL_PROVENANCE.md          # computational provenance and protocol documentation
-  VALIDATION_REPORT.md                 # numerical verification summary
-
-requirements.txt
-LICENSE
-README.md
-```
-
-## Installation
-
-Python 3.10 or newer is required (the analyses were checked with Python 3.11). Create a Python environment and install the required packages:
+## Run
 
 ```bash
-python -m venv .venv
-```
-
-Activate the environment.
-
-On Linux or macOS:
-
-```bash
-source .venv/bin/activate
-```
-
-On Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-Then install the dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Reproduce the boiling-point analysis
-
-Run:
-
-```bash
-python drso_reproducibility.py --mode bp
-```
-
-The script recomputes the manuscript-associated boiling-point results and checks them against the locked manuscript reference values.
-
-The reproduced analyses include:
-
-- pooled repeated cross-validation;
-- the size-only and size-adjusted models;
-- the categorical carbon-number robustness analysis;
-- the complete C6–C10 fixed-size LOOCV results;
-- the complete 45-test boiling-point permutation analysis;
-- the structural-resolution analysis;
-- the descriptor-partition representation limits.
-
-An error is raised if the manuscript-associated numerical checks fail.
-
-## Exact chemical-tree enumeration
-
-A shorter verification through order 18 can be run with:
-
-```bash
-python drso_reproducibility.py --mode enumeration --n-max 18
-```
-
-The complete enumeration through order 20 can be run with:
-
-```bash
-python drso_reproducibility.py --mode enumeration --n-max 20
-```
-
-The order-20 enumeration is computationally more demanding and may require several minutes or longer depending on the available hardware.
-
-Reference equality-class counts through order 20 are provided under `results/reference/`.
-
-## Rebuild the common QDB.122 panel
-
-The QsarDB data-engineering pipeline requires internet access.
-
-Run:
-
-```bash
-python src/qsardb_pipeline.py \
-    --output data/processed/DRSO_QSPR_master_QDB122.csv
-```
-
-The pipeline:
-
-- identifies the common 134-compound D/RI/HC/E panel;
-- restricts BP to the same compound identifiers for the five-response analysis;
-- converts alkane names to hydrogen-suppressed carbon trees;
-- verifies the reconstructed chemical-tree identities;
-- computes the pre-specified descriptor panel.
-
-The common panel contains:
-
-- 4 C6 compounds;
-- 9 C7 compounds;
-- 18 C8 compounds;
-- 34 C9 compounds;
-- 69 C10 compounds.
-
-Thus, the common five-response panel contains 134 molecules in total.
-
-## Reproduce the five-endpoint QSPR analysis
-
-The manuscript-associated HC, D, RI, E, and BP analyses on the common 134-compound QDB.122 panel can be reproduced and audited with:
-
-```bash
-python src/DRSO_five_endpoint_analysis.py
-```
-
-By default, the script rebuilds the common QDB.122 panel through `src/qsardb_pipeline.py`.
-
-If the common panel has already been generated, it can be supplied directly:
-
-```bash
-python src/DRSO_five_endpoint_analysis.py \
-    --panel data/processed/DRSO_QSPR_master_QDB122.csv
-```
-
-The script checks:
-
-- the pooled heat-capacity models;
-- the complete C7/C8 LOOCV results for the fixed nine-descriptor panel;
-- the manuscript DRSO/mDRSO five-endpoint summary;
-- the C8 DRSO representation ceilings;
-- the linear C8 DRSO R² values;
-- the archived DRSO/mDRSO permutation conclusions.
-
-The deterministic numerical analyses are compared with manuscript-associated frozen values and public reference tables where available.
-
-### Optional fresh permutation robustness audit
-
-A new deterministic 10,000-permutation robustness audit for the DRSO/mDRSO five-endpoint associations can be run with:
-
-```bash
-python src/DRSO_five_endpoint_analysis.py --fresh-permutation
-```
-
-This fresh audit is an additional robustness check. It is not presented as a digit-for-digit regeneration of the historical five-endpoint Monte-Carlo p-values.
-
-## Automated verification
-
-Run:
-
-```bash
-pytest -q
-```
-
-The current automated test suite checks:
-
-- manuscript-associated pooled boiling-point cross-validation values;
-- the descriptor comparison reported in Table 6;
-- all 45 boiling-point permutation exceedance counts used to verify the documented randomization protocol;
-- exact chemical-tree enumeration counts for selected small orders.
-
-The five-endpoint audit is currently performed through the dedicated script:
-
-```bash
-python src/DRSO_five_endpoint_analysis.py
-```
-
-## Reproduce the manuscript figures
-
-All six figures are generated by code; none is hand-drawn or produced by an image-generation tool.
-
-```bash
-cd figure_code
-pip install -r requirements-figures.txt
+python -m pip install -r requirements-figures.txt
 python make_all_figures.py
 ```
 
-The scripts check the content they draw: the ten edge-degree types and six ratio classes (Fig. 1), the degree labels and edge-degree counts of the witness trees (Fig. 3), and, with exact SymPy arithmetic, SO(A) = SO(B) and DRSO(A) − DRSO(B) = 2√2 − √17 for the 56-vertex trees (Fig. 4). Figures 5 and 6 are drawn from `results/reference/` tables. See `figure_code/README.md` for the figure-to-file mapping.
+Python 3.10 or newer is required. Each figure is written to `output/` as a vector PDF and a 600-dpi PNG.
 
-## Computational provenance
+## What each figure is built from
 
-Earlier exploratory repeated-CV calculations were produced during development of the computational workflow.
+| Figure | Script | Source of the content | Checks performed by the code |
+|---|---|---|---|
+| Fig1 | `draw_figures_1_3.py` | Ten chemical edge-degree types $(i,j)$, $1\le i\le j\le 4$ | All 10 types occur exactly once, and each reduced ratio equals $\max/\min$. |
+| Fig2 | `draw_fig2_fig4_fig5_fig6.py` | Partition-hierarchy theorem statements | Diagram of the theorem statements; no independent computational theorem check. |
+| Fig3 | `draw_figures_1_3.py` | Witness trees $T_1,T_2$ ($n=9$) and $H_1,H_2$ ($n=16$), built as NetworkX graphs | Tree property, correct order, degree labels and edge-degree counts $m_{ij}$. |
+| Fig4 | `draw_fig2_fig4_fig5_fig6.py` | 56-vertex trees $A,B$ constructed in the proof | Both orders, edge-degree vectors, $\mathrm{SO}(A)=\mathrm{SO}(B)$ and $\mathrm{DRSO}(A)-\mathrm{DRSO}(B)=2\sqrt2-\sqrt{17}$ checked exactly with SymPy. |
+| Fig5 | `draw_fig2_fig4_fig5_fig6.py` | `data/exact_enumeration_counts_n4_n20.csv` | First DRSO–SDD separation at $n=9$ and first SO–DRSO separation at $n=16$. |
+| Fig6 | `draw_fig2_fig4_fig5_fig6.py` | `data/bp_c6_c10_loocv.csv` | Input CSV is read; see analysis scripts for numerical provenance. |
 
-The manuscript-associated results reported in the repository use the finalized protocols documented here and in:
+The two CSV files are copies of reference outputs in the repository's `results/reference/` directory.
 
-```text
-docs/COMPUTATIONAL_PROVENANCE.md
-```
+## Output-to-manuscript file mapping
 
-Earlier exploratory outputs are not included in the public repository.
+| Manuscript file | Generated file |
+|---|---|
+| `Fig1.pdf` | `output/Fig1_reproducible_vector.pdf` |
+| `Fig2.pdf` | `output/Fig2.pdf` |
+| `Fig3.pdf` | `output/Fig3_reproducible_vector.pdf` |
+| `Fig4.pdf` | `output/Fig4.pdf` |
+| `Fig5.pdf` | `output/Fig5.pdf` |
+| `Fig6.pdf` | `output/Fig6.pdf` |
 
-The distinction between `results/reference/` and `results/recomputed/` is organizational:
-
-- `results/reference/` contains manuscript-associated reference outputs;
-- `results/recomputed/` contains outputs regenerated by the public scripts.
-
-## Numerical validation
-
-A summary of the independent numerical checks performed during preparation of the reproducibility package is provided in:
-
-```text
-docs/VALIDATION_REPORT.md
-```
-
-The validation report documents the reproduced boiling-point cross-validation results, permutation-analysis checks, and exact-enumeration checks.
-
-## Data provenance
-
-Experimental alkane data originate from QsarDB QDB.122 and the Liu–Cai–Cao–Li source study cited in the manuscript.
-
-The processed data included in this repository are provided to support reproducibility of the analyses reported in the manuscript. Users should consult QsarDB and the original source for the authoritative experimental records and applicable data-use terms.
-
-The QsarDB density endpoint contains a unit-metadata inconsistency discussed explicitly in the manuscript. The archived numerical observations are retained unchanged in the analyses.
-
-The source-defined endpoint E is handled conservatively and is not assigned a more specific thermodynamic interpretation than is supported by the source documentation.
-
-## Citation and archival release
-
-If you use these materials, please cite the manuscript:
-
-> Hanedan, E., Ozen Erdogan, F., Cangul, I.N.: Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Discrimination, and Alkane QSPR. Submitted to *Journal of Applied Mathematics and Computing* (2026).
-
-Citation metadata for the repository is given in `CITATION.cff`. A citable archival release with a persistent identifier (DOI) will be added here when it is created.
-
-## License
-
-The software and code in this repository are released under the MIT License.
-
-See the `LICENSE` file for details.
-
-Experimental data originating from QsarDB QDB.122 remain subject to the provenance and applicable terms of the original data source.
+`output/graph_verification.json` records the computed edge-degree counts for Figure 3.
