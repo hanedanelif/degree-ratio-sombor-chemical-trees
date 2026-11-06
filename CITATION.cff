@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite them as below."
+title: "Degree-Ratio Sombor Indices of Chemical Trees: computational reproducibility materials"
+type: software
+license: MIT
+repository-code: "https://github.com/hanedanelif/degree-ratio-sombor-chemical-trees"
+authors:
+  - family-names: Hanedan
+    given-names: Elif
+    affiliation: "Bursa Uludağ University"
+  - family-names: Ozen Erdogan
+    given-names: Fatma
+    affiliation: "Bursa Uludağ University"
+  - family-names: Cangul
+    given-names: Ismail Naci
+    affiliation: "Bursa Uludağ University"
+keywords:
+  - Degree-Ratio Sombor index
+  - Sombor index
+  - chemical trees
+  - QSPR
