@@ -16,6 +16,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+
+import io
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -35,7 +37,7 @@ def fetch_property_table(property_id: str, timeout: int = 60) -> pd.DataFrame:
     response = requests.get(url, headers={"User-Agent":"academic-QSPR-reproducibility/1.0"}, timeout=timeout)
     response.raise_for_status()
     candidate = None
-    for table in pd.read_html(response.text):
+    for table in pd.read_html(io.StringIO(response.text)):
         cols = [str(c).strip() for c in table.columns]
         if "ID" in cols and "Name" in cols and property_id in cols:
             candidate = table.copy(); break
