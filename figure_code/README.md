@@ -1,6 +1,6 @@
 # Figure sources for "Degree-Ratio Sombor Indices of Chemical Trees"
 
-This directory contains reproducible Python plotting implementations for Figures 1–6 of the manuscript. The scripts create vector-PDF and 600-dpi PNG outputs from the specified mathematical constructions and reference data. Use the outputs of these scripts when a direct match to the supplied source code is required.
+This directory contains reproducible Python plotting implementations for Figures 1–6 of the manuscript. The scripts create vector-PDF and 600-dpi PNG outputs from the specified mathematical constructions and reference data. The figures in the manuscript are exactly these script outputs.
 
 ## Run
 
