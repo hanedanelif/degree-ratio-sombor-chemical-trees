@@ -323,7 +323,7 @@ The source-defined endpoint E is handled conservatively and is not assigned a mo
 
 If you use these materials, please cite the manuscript:
 
-> Hanedan, E., Ozen Erdogan, F., Cangul, I.N.: Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Discrimination, and Alkane QSPR. Submitted to *Journal of Applied Mathematics and Computing* (2026).
+> Hanedan, E., Ozen Erdogan, F., Cangul, I.N.: Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Discrimination, and Alkane QSPR. Manuscript prepared for submission to Journal of Applied Mathematics and Computing (2026).
 
 Citation metadata for the repository is given in `CITATION.cff`. A citable archival release with a persistent identifier (DOI) will be added here when it is created.
 
