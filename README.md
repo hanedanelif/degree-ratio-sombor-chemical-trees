@@ -3,7 +3,7 @@
 This repository provides the computational materials associated with the manuscript
 
 **“Degree-Ratio Sombor Indices of Chemical Trees: Ratio Profiles, Discrimination, and Alkane QSPR”**
-by Elif Hanedan, Fatma Ozen Erdogan and Ismail Naci Cangul (Bursa Uludağ University), submitted to the *Journal of Applied Mathematics and Computing*.
+by Elif Hanedan, Fatma Ozen Erdogan and Ismail Naci Cangul (Bursa Uludağ University), prepared for submission to the *Journal of Applied Mathematics and Computing*.
 
 It contains the analysis code, processed data used in the manuscript, reference result tables, consistency checks, and the code that draws all six manuscript figures.
 
